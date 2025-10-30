@@ -1,8 +1,8 @@
 .custom-entry-node {
   background: white;
-  border: 1px solid #e5e7eb;
+  border: 2px solid #DDE3EE;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); */
   min-width: 280px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -31,10 +31,17 @@
 .locale {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 5px;
   padding: 6px 0;
   font-size: 14px;
   color: #6b7280;
+}
+
+.content-type {
+  border: 1px solid #48B2DE;
+  border-radius: 8px;
+  padding: 2px 4px;
+  width: fit-content;
 }
 
 .content-type .icon,
@@ -52,7 +59,7 @@
 .custom-entry-node .react-flow__handle {
   width: 8px;
   height: 8px;
-  background: #3b82f6;
+  background: #6E6B86;
   border: 2px solid white;
 }
 
@@ -66,16 +73,16 @@
   right: -12px;
   top: 50%;
   transform: translateY(-50%);
-  background: #3b82f6;
-  color: white;
+  background: white;
+  border: 1px solid #6C5CE7;
+  color: #6C5CE7;
   width: 24px;
   height: 24px;
-  border-radius: 50%;
+  border-radius: 11px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 600;
-  border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }

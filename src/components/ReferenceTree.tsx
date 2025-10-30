@@ -9,6 +9,8 @@ import {
   useNodesState,
   useEdgesState,
   useReactFlow,
+  type Node,
+  type Edge,
 } from '@xyflow/react';
 
 import '@xyflow/react/dist/style.css';
@@ -16,6 +18,17 @@ import CustomEntryNode from './CustomEntryNode';
 import './CustomEntryNode.css';
 
 const position = { x: 0, y: 0 };
+
+const nodeContentTypeColorMap = {
+  Parts: '#48B2DE',
+  Page: '#6C5CE7',
+  Component: '#FFA500',
+  Module: '#90EE90',
+  Article: '#FF69B4',
+  Person: '#87CEEB',
+  Asset: '#98FB98',
+  Form: '#FFDAB9',
+};
 
 const initialNodes = [
   {
@@ -26,6 +39,7 @@ const initialNodes = [
       contentType: 'Parts',
       locale: 'English - United States (M)',
       childCount: 2,
+      colorHeader: nodeContentTypeColorMap.Parts,
     },
     position,
   },
@@ -37,6 +51,7 @@ const initialNodes = [
       contentType: 'Page',
       locale: 'English - United Kingdom',
       childCount: 3,
+      colorHeader: nodeContentTypeColorMap.Page,
     },
     position,
   },
@@ -48,6 +63,7 @@ const initialNodes = [
       contentType: 'Component',
       locale: 'English - United States (M)',
       childCount: 1,
+      colorHeader: nodeContentTypeColorMap.Component,
     },
     position,
   },
@@ -59,6 +75,7 @@ const initialNodes = [
       contentType: 'Module',
       locale: 'Spanish - Spain',
       childCount: 1,
+      colorHeader: nodeContentTypeColorMap.Module,
     },
     position,
   },
@@ -70,6 +87,7 @@ const initialNodes = [
       contentType: 'Component',
       locale: 'French - France',
       childCount: 1,
+      colorHeader: nodeContentTypeColorMap.Component,
     },
     position,
   },
@@ -81,6 +99,7 @@ const initialNodes = [
       contentType: 'Component',
       locale: 'German - Germany',
       childCount: 1,
+      colorHeader: nodeContentTypeColorMap.Article,
     },
     position,
   },
@@ -103,6 +122,7 @@ const initialNodes = [
       contentType: 'Person',
       locale: 'English - United States (M)',
       childCount: 1,
+      colorHeader: nodeContentTypeColorMap.Person,
     },
     position,
   },
@@ -114,6 +134,7 @@ const initialNodes = [
       contentType: 'Asset',
       locale: 'English - United States (M)',
       childCount: 2,
+      colorHeader: nodeContentTypeColorMap.Asset,
     },
     position,
   },
@@ -125,6 +146,7 @@ const initialNodes = [
       contentType: 'Form',
       locale: 'Italian - Italy',
       childCount: 0,
+      colorHeader: nodeContentTypeColorMap.Form,
     },
     position,
   },
@@ -136,6 +158,7 @@ const initialNodes = [
       contentType: 'Module',
       locale: 'Portuguese - Brazil',
       childCount: 0,
+      colorHeader: nodeContentTypeColorMap.Module,
     },
     position,
   },
@@ -239,19 +262,23 @@ const elkOptions = {
   'elk.algorithm': 'layered',
   'elk.layered.spacing.nodeNodeBetweenLayers': '100',
   'elk.spacing.nodeNode': '80',
+  'elk.direction': 'RIGHT',
 };
 
-const getLayoutedElements = (nodes, edges, options = {}) => {
-  const isHorizontal = options?.['elk.direction'] === 'RIGHT';
+const getLayoutedElements = (nodes: Node[], edges: Edge[], options = {}) => {
+  console.log('nodes', nodes);
+  console.log('edges', edges);
+  console.log('options', options);
+  // const isHorizontal = options?.['elk.direction'] === 'RIGHT';
   const graph = {
     id: 'root',
     layoutOptions: options,
-    children: nodes.map((node) => ({
+    children: nodes.map((node: Node) => ({
       ...node,
       // Adjust the target and source handle positions based on the layout
       // direction.
-      targetPosition: isHorizontal ? 'left' : 'top',
-      sourcePosition: isHorizontal ? 'right' : 'bottom',
+      // targetPosition: isHorizontal ? 'left' : 'top',
+      // sourcePosition: isHorizontal ? 'right' : 'bottom',
 
       // Hardcode a width and height for elk to use when layouting.
       width: 280,
@@ -282,10 +309,11 @@ const LayoutFlow = () => {
 
   const nodeTypes = useMemo(() => ({ customEntry: CustomEntryNode }), []);
 
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
+  // const onConnect = useCallback(
+  //   (params: Edge) => setEdges((eds) => addEdge(params, eds)),
+  //   []
+  // );
+
   const onLayout = useCallback(
     ({ direction, useInitialNodes = false }) => {
       const opts = { 'elk.direction': direction, ...elkOptions };
@@ -305,7 +333,7 @@ const LayoutFlow = () => {
 
   // Calculate the initial layout on mount.
   useLayoutEffect(() => {
-    onLayout({ direction: 'DOWN', useInitialNodes: true });
+    onLayout({ direction: 'RIGHT', useInitialNodes: true });
   }, []);
 
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
@@ -316,13 +344,13 @@ const LayoutFlow = () => {
     <ReactFlow
       nodes={nodes}
       edges={edges}
-      onConnect={onConnect}
+      // onConnect={onConnect}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       nodeTypes={nodeTypes}
       onNodeClick={onNodeClick}
       fitView>
-      <Panel position='top-right'>
+      {/* <Panel position='top-right'>
         <button
           className='xy-theme__button'
           onClick={() => onLayout({ direction: 'DOWN' })}>
@@ -334,7 +362,7 @@ const LayoutFlow = () => {
           onClick={() => onLayout({ direction: 'RIGHT' })}>
           horizontal layout
         </button>
-      </Panel>
+      </Panel> */}
       {/* <Background /> */}
     </ReactFlow>
   );

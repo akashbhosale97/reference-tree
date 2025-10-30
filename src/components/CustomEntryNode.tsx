@@ -1,11 +1,14 @@
 import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
+import contentModelIcon from '../assets/Content Model.png';
+import localeIcon from '../assets/Language.png';
 
 interface CustomNodeData {
   entryName: string;
   contentType: string;
   locale: string;
   childCount?: number;
+  colorHeader?: string;
 }
 
 const CustomEntryNode = ({ data }: { data: CustomNodeData }) => {
@@ -16,49 +19,17 @@ const CustomEntryNode = ({ data }: { data: CustomNodeData }) => {
       <div className='node-content'>
         <div className='entry-name'>{data.entryName}</div>
 
-        <div className='content-type'>
-          <svg
-            width='16'
-            height='16'
-            viewBox='0 0 16 16'
-            fill='none'
-            className='icon'>
-            <path
-              d='M3 3h10v10H3V3z'
-              stroke='currentColor'
-              strokeWidth='1.5'
-              fill='none'
-            />
-            <path
-              d='M6 6h4M6 8h4M6 10h2'
-              stroke='currentColor'
-              strokeWidth='1.5'
-              strokeLinecap='round'
-            />
-          </svg>
+        <div
+          className='content-type'
+          style={{
+            borderColor: data.colorHeader ? data.colorHeader : '#48B2DE',
+          }}>
+          <img src={contentModelIcon} alt={data.contentType} />
           <span>{data.contentType}</span>
         </div>
 
         <div className='locale'>
-          <svg
-            width='16'
-            height='16'
-            viewBox='0 0 16 16'
-            fill='none'
-            className='icon'>
-            <path
-              d='M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z'
-              stroke='currentColor'
-              strokeWidth='1.5'
-              fill='none'
-            />
-            <path
-              d='M2 8h12M8 2c1.5 1.5 2 4 2 6s-.5 4.5-2 6c-1.5-1.5-2-4-2-6s.5-4.5 2-6z'
-              stroke='currentColor'
-              strokeWidth='1.5'
-              fill='none'
-            />
-          </svg>
+          <img src={localeIcon} alt={data.locale} />
           <span>{data.locale}</span>
         </div>
       </div>
